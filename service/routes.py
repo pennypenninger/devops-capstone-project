@@ -62,6 +62,19 @@ def create_accounts():
 ######################################################################
 
 # ... place you code here to LIST accounts ...
+@app.route("/accounts", methods=["GET"])
+def list_accounts():
+    accounts = Account.all()
+
+    if accounts is None:
+        return abort(status.HTTP_404_NOT_FOUND)
+
+    data = []
+
+    for account in accounts:
+        data.append(account.serialize())
+
+    return jsonify(data), status.HTTP_200_OK
 
 
 ######################################################################
