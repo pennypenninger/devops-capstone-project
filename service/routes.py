@@ -98,6 +98,17 @@ def read_account(id):
 ######################################################################
 
 # ... place you code here to UPDATE an account ...
+@app.route("/accounts/<id>", methods=["PUT"])
+def update_account(id):
+    account = Account.find(id)
+
+    if account is None:
+        return abort(status.HTTP_404_NOT_FOUND)
+
+    account.deserialize(request.get_json())
+    account.update()
+
+    return account.serialize(), status.HTTP_200_OK
 
 
 ######################################################################
